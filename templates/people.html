@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+
+{% with messages = get_flashed_messages(category_filter=["success"]) %}  
+         {% if messages %}  
+                {% for message in messages %}  
+                      <div class="alert alert-success alert-dismissible">
+                          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                          {{ message }}
+                          <a href="/person_get" class="btn btn-success" style="margin-left: 40px;">Web</a>
+                          <a href="/console_insert" class="btn btn-success" style="margin-left: 10px;">Console</a>
+                      </div>
+               {% endfor %}  
+         {% endif %}  
+      {% endwith %}
+    
+{% with messages = get_flashed_messages(category_filter=["warning"]) %}  
+      {% if messages %}  
+             {% for message in messages %}  
+                   <div class="alert alert-warning alert-dismissible">
+                       <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                       {{ message }}
+                       <a href="/person_update/{{ id }}" class="btn btn-warning" style="margin-left: 40px;">Web</a>
+                       <a href="/console_update/{{ id }}" class="btn btn-warning" style="margin-left: 10px;">Console</a>
+                   </div>
+            {% endfor %}  
+      {% endif %}  
+   {% endwith %}
+  
+   {% with messages = get_flashed_messages(category_filter=["danger"]) %}  
+   {% if messages %}  
+          {% for message in messages %}  
+                <div class="alert alert-danger alert-dismissible" style="display: flex;">
+                    {{ message }}
+                    <form action="/person_delete/{{ id }}" method="post" style="margin-left: 40px;" onclick="return confirm('Are You Sure To Delete ?')">
+                      <input class="btn btn-danger" type = "submit" value = "Web"/>
+                    </form>
+                    <form action="/console_delete/{{ id }}" method="get" style="margin-left: 10px;" onclick="return confirm('Are You Sure To Delete ?')">
+                      <input class="btn btn-danger" type = "submit" value = "Console"/>
+                    </form>
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close" style="margin-left: 600px;">&times;</a>
+                </div>
+         {% endfor %}  
+   {% endif %}  
+{% endwith %}
+
+  
+{% with messages = get_flashed_messages(category_filter=["info"]) %}  
+      {% if messages %}  
+             {% for message in messages %}  
+                   <div class="alert alert-info alert-dismissible">
+                       <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                       {{ message }}
+                   </div>
+            {% endfor %}  
+      {% endif %}  
+   {% endwith %}
+
+
+
+<h2>People</h2>
+
+<a id="btn" href="/choice_insert" class="btn btn-success float-right">Add New Person</a>
+
+
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+        <th scope="col">Id</th>
+        <th scope="col">First</th>
+        <th scope="col">Last</th>
+        <th scope="col">Edit | Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for line in value %}
+  
+    <tr>
+        <th scope="row">{{line[0]}}</th>
+        <td>{{line[1]}}</td>
+        <td>{{line[2]}}</td>
+        <td style="display: flex; ">
+          <form id="form_id" action="/choice_update/{{line[0]}}" name="search-theme-form" method="get" >
+              <input class="btn btn-warning btn-xs" type = "submit" value = "Edit" onclick='myUpdate()'/>
+          </form> 
+          <form action="/choice_delete/{{line[0]}}" method="post" style="padding-left:4px">
+            <input class="btn btn-danger btn-xs" type = "submit" value = "Delete"/>
+          </form>
+        </td>
+    </tr>
+
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

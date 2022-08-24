@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+
+
+
+<div class="page-header">
+    <h1>Person Update</h1>
+    <p>Enter your First Name and Last Name:   </p>
+        <br>
+            {% for line in value %}
+            <form action="/person_updated/{{line[0]}}" method="post" name="myForm" onsubmit="return validateForm()">
+                <input type="hidden" id="op" name="op" value="I">
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="inputGroup_id">ID</span>
+                    <input value={{line[0]}} placeholder={{line[0]}} type="text" class="form-control" name="id_person" aria-label="Sizing example input" aria-describedby="inputGroup_idt" disabled="disabled">
+                </div>
+
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="inputGroup_name">First name</span>
+                    <input placeholder={{line[1]}} type="text" class="form-control" name="first_name" aria-label="Sizing example input" aria-describedby="inputGroup_name">
+                </div>
+
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="inputGroup_lastName">Last Name</span>
+                    <input placeholder={{line[2]}} type="text" class="form-control" name="last_name" aria-label="Sizing example input" aria-describedby="inputGroup_lastName">
+                </div>
+                {% endfor %}
+                <br>
+                <input class="btn btn-primary" type="submit" name="form" value="Submit" />
+                <script>
+                    function validateForm() {
+                        var x = document.forms["myForm"]["first_name"].value;
+                        var x2 = document.forms["myForm"]["last_name"].value;
+                        if (x == "" || x2 == "") {
+                            alert("There are missing fields");
+                            return false;
+                        }
+                    }
+                </script>
+            </form>
+</div>
+
+{% endblock %}
