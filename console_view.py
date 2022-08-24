@@ -3,7 +3,7 @@ def insert_view():
 
 
 def person_founded():
-    print("Please type a different id")
+    print("Please type a different id.")
 
 def empty_input():
     print("Please type something do not left the input empty.")
